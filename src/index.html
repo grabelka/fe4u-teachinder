@@ -16,14 +16,14 @@
 
    <body itemscope itemtype="http://schema.org/WebPage">
       <header>
-         <p class="header-name">Teachinder</p>
-         <p class="header-name-orange">Teachinder</p>
+         <h1 class="header-name">Teachinder</h1>
+         <h1 class="header-name-orange">Teachinder</h1>
          <section class="search">
-            <input type="text" class="search-teacher" placeholder="Name, note or age to search">
+            <input type="text" class="search-teacher" size="25" placeholder="Name, note or age to search">
             <input type="button" class="button" value="Search">
          </section>
       </header>
-      <section class="navigation">
+      <nav class="navigation">
          <div class="header-nav">
             <a href="#top">Teachers</a>
             <a href="#statistics">Statistics</a>
@@ -31,7 +31,7 @@
             <a href="#about">About</a>
          </div>
          <input type="button" class="add button" value="Add teacher">
-      </section>
+      </nav>
       <h1 id="top">Top teachers</h1>
       Age: <select name="age" required > 
          <option value="18-31">18-31</option> 
@@ -113,6 +113,8 @@
             <p class="image-speciality">Sciense</p>
             <p class="image-country">USA</p>
          </div>
+         <div class="not-image hidden"></div>
+         <div class="not-image hidden"></div>
       </div>
       <h1 id="statistics">Statistics</h1>
       <div class="column">

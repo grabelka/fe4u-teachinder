@@ -1,18 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital@0;1&family=Source+Sans+Pro:wght@200;300;400;600;700&display=swap');
 
 .header-name, .header-name-orange {
   position: absolute;
   left: 40px;
-  margin: 10px;
-  font-family: "Source Sans Pro";
+  width: auto;
+  margin: 0px;
   font-weight: 600;
   font-size: 40px;
   color: white;
-  text-shadow: 2px 2px #000000;
+  border: 0;
+  text-shadow: 2px 2px #000;
 }
 
 @media screen and (max-width: 768px) {
   .header-name {
-    position: absolute;
     visibility: hidden;
   }
 }
@@ -53,7 +55,7 @@
 }
 
 h1 {
-  font-family: "Source Sans Pro";
+  font-family: "Source Sans Pro", sans-serif;
   font-weight: 600;
   size: 40px;
   margin-left: 20%;
@@ -62,8 +64,8 @@ h1 {
   border-top: 1px solid black;
 }
 
-p, th, td, input, a {
-  font-family: "PT Sans";
+p, th, td, input, a, body {
+  font-family: "PT Sans", sans-serif;
   font-weight: 400;
   size: 16px;
 }
@@ -170,10 +172,14 @@ tr:nth-child(even) {
   padding-right: 50px;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 @media screen and (min-width: 768px) {
   .top-container, .fav-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content:center;
     margin-left: 100px;
     margin-right: 100px;
     margin-top: 2em;
@@ -388,6 +394,7 @@ img.popup-img {
   border: 0;
   float: left;
   margin: 0;
+  margin-right: 1em;
 }
 
 .checkbox {
@@ -426,3 +433,4 @@ img.popup-img {
   right: 0.3em;
   color: rgb(228, 207, 15);
 }
+
