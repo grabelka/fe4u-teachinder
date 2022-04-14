@@ -15,31 +15,43 @@
    </head>
 
    <body itemscope itemtype="http://schema.org/WebPage">
-      <section class="form">
-         <h1>Form: </h1>
-         <p><b>Full name: </b></p>
-         <input type="text" name="fullname" size="20" placeholder="fullname"> 
-         <p><b>Sex: </b></p>
-         <select list="list" name="sex" required > 
-            <option value="Male">Male</option> 
-            <option value="Female">Female</option>
+      <section class="popup">
+         <header>
+            <p class="add-teacher-header">Add teacher</p>
+            <p>&#x2715</p>
+         </header>
+         <p>Name</p>
+         <input type="text" name="fullname" size="20" placeholder="Enter name"> 
+         <p><b>Speciality: </b></p>
+         <select name="speciality" required > 
+            <option value="Mathematics">Mathematics</option> 
+            <option value="Sciense">Sciense</option>
+            <option value="Languages">Languages</option>
          </select>
-         <p><b>Date of birth: </b></p>
-         <input type="date" name="date_of_birth"> 
-         <p><i>Email: </i></p>
-         <input type="email" name="email" size="20" placeholder="email"> 
-         <p><i>Phone: </i></p>
+         <p>Country</p>
+         <select name="country" required > 
+            <option value="Ukraine">Ukraine</option> 
+            <option value="Poland">Poland</option>
+            <option value="USA">USA</option>
+            <option value="Canada">Canada</option>
+         </select>
+         <p>City</p>
+         <input type="text" name="city" size="20"> 
+         <p>Email</p>
+         <input type="email" name="email" size="20"> 
+         <p>Phone</p>
          <input type="tel" name="phone" size="20"> 
-         <p>Bacground color: </p>
+         <p>Date of birth</p>
+         <input type="date" name="date_of_birth"> 
+         <p>Sex</p>
+         Male <input type="checkbox"> 
+         Female <input type="checkbox"> 
+         <p>Bacground color </p>
          <input type="color" name="background_color"> 
-         <p><b>Country: </b></p>
-         <input type="text" name="country" size="20" placeholder="country"> 
-         <p><b>City: </b></p>
-         <input type="text" name="city" size="20" placeholder="city"> 
-         <p><i>Comment: </i></p>
+         <p>Notes (optional)</p>
          <textarea rows="5" cols="45" name="comment"></textarea>
          <br>
-         <input type="submit" value="Send">
+         <input type="submit" class="button" value="Add">
       </section>
    </body>
 </html>
