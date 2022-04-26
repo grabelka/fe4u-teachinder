@@ -20,7 +20,7 @@
          <h1 class="header-name-orange">Teachinder</h1>
          <section class="search">
             <input type="text" class="search-teacher" size="25" placeholder="Name, note or age to search">
-            <input type="button" class="button" value="Search">
+            <input onclick="search()" type="button" class="button" value="Search">
          </section>
       </header>
       <nav class="navigation">
@@ -30,7 +30,7 @@
             <a href="#favorites">Favorites</a>
             <a href="#about">About</a>
          </div>
-         <input type="button" class="add button" value="Add teacher">
+         <input onclick="openAddPopup()" type="button" class="add button" value="Add teacher">
       </nav>
       <h1 id="top">Top teachers</h1>
       Age: <select name="age" required > 
@@ -263,13 +263,13 @@
             <a href="#favorites">Favorites</a>
             <a href="#about">About</a>
          </div>
-         <input type="button" class="add button" value="Add teacher">
+         <input onclick="openAddPopup()" type="button" class="add button" value="Add teacher">
       </section>
       
       <section class="add-popup">
          <header class="popup-header">
             <p class="add-teacher-header">Add teacher</p>
-            <p>&#x2715</p>
+            <p onclick="closeAddPopup()">&#x2715</p>
          </header>
          <section class="grid-container">
             <div class="grid-name">
@@ -325,14 +325,14 @@
                <textarea rows="5" cols="45" class="max-width-comment"></textarea>
                <br>
             </div>
-            <div class="grid-button"><input type="submit" class="button max-width add-button" value="Add"></div>
+            <div class="grid-button"><input onclick="addTeacher()" type="submit" class="button max-width add-button" value="Add"></div>
          </section>
       </section>
 
       <section class="info-popup" data-bacground-color="white">
          <header class="popup-header">
             <p class="teacher-info-header">Teacher Info</p>
-            <p>&#x2715</p>
+            <p onclick="closeInfoPopup()">&#x2715</p>
          </header>
          <div class="info-box">
             <p class="info-star">&#9734</p>
@@ -347,5 +347,6 @@
             <p class="info-text-map">toggle map</p>
          </div>
       </section> 
+      <script type="text/javascript" src="./js/app.js"></script>
   </body>
 </html>
