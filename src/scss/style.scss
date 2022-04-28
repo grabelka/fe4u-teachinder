@@ -221,15 +221,12 @@ img:hover, .not-image:hover {
   top: 0.5em;
   right: 0.5em;
   color: rgb(228, 207, 15);
+  visibility: hidden;
 }
 
 @media screen and (max-width: 768px) {
   .star {
-    position: absolute;
-    font-size: 3em;
-    top: 0.5em;
     right: 35%;
-    color: rgb(228, 207, 15);
   }
 }
 
@@ -243,7 +240,7 @@ img:hover, .not-image:hover {
   color: #fa1d1d
 }
 
-.image-name {
+.image-name, .image-lastname {
   font-size: 1.5em;
   margin-top: 0.1em;
 }
@@ -259,19 +256,19 @@ img:hover, .not-image:hover {
 }
 
 @media screen and (max-width: 768px) {
-  .prev, .next {
+  #prev, #next {
     visibility: hidden;
   }
 }
 
-.prev, .next {
+#prev, #next {
   font-size: 80px;
   color:#a3a3a3;
   margin-top: auto;
   margin-bottom: auto;
 }
 
-.prev:hover, .next:hover {
+#prev:hover, #next:hover {
   color:#5f5f5f;
 }
 
@@ -387,7 +384,7 @@ img:hover, .not-image:hover {
   color: #f2eef8;
 }
 
-img.popup-img {
+#popup-img {
   border-radius: 0;
   width: 16em;
   height: 16em;
@@ -405,7 +402,7 @@ img.popup-img {
   margin: 1em;
 }
 
-.info-text, .info-text-name, .info-text-spesiality, .info-text-mail, .info-textinfo .info-text-map {
+.info-text, .info-text-name, .info-text-speciality, .info-text-mail, .info-textinfo .info-text-map {
   margin-top: 1em;
 }
 
@@ -413,7 +410,7 @@ img.popup-img {
   font-size: 30px;
 }
 
-.info-text-spesiality {
+.info-text-speciality {
   font-weight: bolder;
 }
 
@@ -426,7 +423,7 @@ img.popup-img {
   width: 5em;
 }
 
-.info-star {
+#info-star {
   position: absolute;
   font-size: 3em;
   top: 1em;
