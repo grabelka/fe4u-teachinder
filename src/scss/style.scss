@@ -11,6 +11,7 @@
   color: white;
   border: 0;
   text-shadow: 2px 2px #000;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
@@ -192,7 +193,7 @@ tr:nth-child(even) {
   margin-right: 40px;
 }
 
-img, .not-image {
+.image-large, .not-image {
   border-radius: 50%;
   width: 10em;
   height: 10em;
@@ -213,6 +214,10 @@ img:hover, .not-image:hover {
 
 .starred {
   position: relative;
+}
+
+.image-large, .list-nav, .cursor {
+  cursor: pointer;
 }
 
 .star {
@@ -262,6 +267,7 @@ img:hover, .not-image:hover {
 }
 
 #prev, #next {
+  cursor: pointer;
   font-size: 80px;
   color:#a3a3a3;
   margin-top: auto;
@@ -431,3 +437,29 @@ img:hover, .not-image:hover {
   color: rgb(228, 207, 15);
 }
 
+.search-list {
+  visibility: visible;
+  text-align: left;
+  background-color: #fff;
+  width: 12.4em;
+  padding: 1em;
+  position: absolute;
+  right: 9.7em;
+  border: 1px solid grey;
+  top: 50px;
+}
+
+.image-small {
+  margin-right: 0.5em;
+  height: 1.3em;
+  width: 1.3em;
+  border-radius: 50%;
+}
+
+.search-container {
+  font-size: larger;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  display: flex;
+  justify-content: left;
+}

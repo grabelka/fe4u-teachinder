@@ -32,7 +32,7 @@ function showTop() {
     lastname.textContent = data[i].full_name.split(' ')[1];
     country.classList.add('image-country');
     country.textContent = data[i].country;
-    country.classList.add('image-speciality');
+    speciality.classList.add('image-speciality');
     speciality.textContent = data[i].course;
     div.appendChild(img);
     div.appendChild(name);
@@ -97,7 +97,7 @@ function showFav() {
     lastname.textContent = fav[i].full_name.split(' ')[1];
     country.classList.add('image-country');
     country.textContent = fav[i].country;
-    country.classList.add('image-speciality');
+    speciality.classList.add('image-speciality');
     speciality.textContent = fav[i].course;
     div.appendChild(img);
     div.appendChild(name);
@@ -105,28 +105,6 @@ function showFav() {
     div.appendChild(speciality);
     div.appendChild(country);
     document.getElementsByClassName('fav-container')[0].insertBefore(div, next);
-  }
-}
-
-function addTeacher() {
-  const obj = {};
-  obj.full_name = document.getElementById('addName').value;
-  obj.email = document.getElementById('addMail').value;
-  obj.phone = document.getElementById('addPhone').value;
-  obj.course = document.getElementById('addCourse').value;
-  obj.country = document.getElementById('addCountry').value;
-  obj.city = document.getElementById('addCity').value;
-  obj.b_date = document.getElementById('addDate').value;
-  obj.age = 2022 - document.getElementById('addDate').value.split('-')[0];
-  obj.color = document.getElementById('addColor').value;
-  obj.note = document.getElementById('addNote').value;
-  if (document.getElementById('addMale').checked) obj.gender = 'male';
-  if (document.getElementById('addFemale').checked) obj.gender = 'female';
-  document.getElementsByClassName('add-popup')[0].style.visibility = 'hidden';
-  if (validation(obj)) {
-    data.push(obj);
-  } else {
-    alert('Your data is not valid.');
   }
 }
 
@@ -148,16 +126,47 @@ function openInfoPopup(searchData) {
   document.getElementsByClassName('info-popup')[0].style.visibility = 'visible';
 }
 
+function closeSearch() {
+  for (let i = 0; i < document.getElementsByClassName('search-list').length; i += 1) {
+    document.getElementsByClassName('search-list')[i].style.visibility = 'hidden';
+  }
+}
+
 function search() {
+  closeSearch();
   const searchData = document.getElementsByClassName('search-teacher')[0].value;
-  openInfoPopup(searchData);
+  const teachers = findObj(data, searchData);
+  const div = document.createElement('div');
+  div.classList.add('search-list');
+  for (let i = 0; i < teachers.length; i += 1) {
+    const container = document.createElement('div');
+    container.classList.add('search-container');
+    const img = document.createElement('img');
+    img.classList.add('image-small');
+    img.src = teachers[i].picture_large;
+    const name = document.createElement('p');
+    name.textContent = teachers[i].full_name;
+    container.appendChild(img);
+    container.appendChild(name);
+    div.appendChild(container);
+  }
+  if (!teachers.length) {
+    const message = document.createElement('p');
+    message.textContent = 'Teacher not found';
+    div.appendChild(message);
+  }
+  document.getElementsByTagName('body')[0].appendChild(div);
 }
 
 function pagination(index) {
   for (let i = 0; i < 10; i += 1) {
     document.getElementsByClassName('table-name')[i].innerHTML = sortedData[index + i].full_name;
     document.getElementsByClassName('table-course')[i].innerHTML = sortedData[index + i].course;
-    document.getElementsByClassName('table-age')[i].innerHTML = sortedData[index + i].age;
+    if (sortedData[index + i].age) {
+      document.getElementsByClassName('table-age')[i].innerHTML = sortedData[index + i].age;
+    } else {
+      document.getElementsByClassName('table-age')[i].innerHTML = ' ';
+    }
     document.getElementsByClassName('table-gender')[i].innerHTML = sortedData[index + i].gender;
     document.getElementsByClassName('table-country')[i].innerHTML = sortedData[index + i].country;
   }
@@ -169,7 +178,11 @@ function sortTable(field) {
   for (let i = 0; i < 10; i += 1) {
     document.getElementsByClassName('table-name')[i].innerHTML = sortedData[i].full_name;
     document.getElementsByClassName('table-course')[i].innerHTML = sortedData[i].course;
-    document.getElementsByClassName('table-age')[i].innerHTML = sortedData[i].age;
+    if (sortedData[i].age) {
+      document.getElementsByClassName('table-age')[i].innerHTML = sortedData[i].age;
+    } else {
+      document.getElementsByClassName('table-age')[i].innerHTML = ' ';
+    }
     document.getElementsByClassName('table-gender')[i].innerHTML = sortedData[i].gender;
     document.getElementsByClassName('table-country')[i].innerHTML = sortedData[i].country;
   }
@@ -226,7 +239,7 @@ function showFilterTop() {
       document.getElementsByClassName('image-large')[i].src = showArray[i].picture_large;
       document.getElementsByClassName('image-name')[i].innerHTML = showArray[i].full_name.split(' ')[0];
       document.getElementsByClassName('image-lastname')[i].innerHTML = showArray[i].full_name.split(' ')[1];
-      document.getElementsByClassName('image-speciality')[i].innerHTML = showArray[i].course;
+      document.getElementsByClassName('image-speciality')[i].innerHTML = showArray[i].country;
       document.getElementsByClassName('image-country')[i].innerHTML = showArray[i].country;
       if (showArray[i].favorite) {
         document.getElementsByClassName('star')[i].style.visibility = 'visible';
@@ -285,6 +298,31 @@ function showOnlyPhoto() {
   showFilterTop();
 }
 
+function addTeacher() {
+  const obj = {};
+  obj.full_name = document.getElementById('addName').value;
+  obj.email = document.getElementById('addMail').value;
+  obj.phone = document.getElementById('addPhone').value;
+  obj.course = document.getElementById('addCourse').value;
+  obj.country = document.getElementById('addCountry').value;
+  obj.city = document.getElementById('addCity').value;
+  obj.b_date = document.getElementById('addDate').value;
+  obj.age = 2022 - document.getElementById('addDate').value.split('-')[0];
+  obj.color = document.getElementById('addColor').value;
+  obj.note = document.getElementById('addNote').value;
+  if (document.getElementById('addMale').checked) obj.gender = 'male';
+  if (document.getElementById('addFemale').checked) obj.gender = 'female';
+  obj.picture_large = '../images/user.png';
+  document.getElementsByClassName('add-popup')[0].style.visibility = 'hidden';
+  if (validation(obj)) {
+    data.unshift(obj);
+    showFilterTop();
+    pagination(0);
+  } else {
+    alert('Your data is not valid.');
+  }
+}
+
 console.log(testModules.hello);
 showTop();
 showTable();
@@ -332,3 +370,4 @@ document.getElementById('page-last').addEventListener('click', () => pagination(
 
 document.getElementById('next').addEventListener('click', () => paginationFav(1));
 document.getElementById('prev').addEventListener('click', () => paginationFav(-1));
+document.getElementsByTagName('section')[0].addEventListener('click', closeSearch);

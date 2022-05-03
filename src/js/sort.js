@@ -3,7 +3,7 @@ module.exports = (arr, field, isAsc) => {
     return arr;
   }
   if (field === 'full_name' || field === 'course' || field === 'country' || field === 'gender') {
-    arr.sort((a, b) => isAsc ? (a[field] > b[field] ? 1 : -1) : (a[field] < b[field] ? 1 : -1));
+    arr.sort((a, b) => isAsc ? (a[field] && b[field] && (a[field].toLowerCase() > b[field].toLowerCase()) ? 1 : -1) : (a[field] && b[field] && (a[field].toLowerCase() < b[field].toLowerCase()) ? 1 : -1));
     return arr;
   }
   if (field === 'bDay' && !isAsc) {
