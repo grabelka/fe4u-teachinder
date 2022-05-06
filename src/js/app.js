@@ -29,7 +29,7 @@ function showTop() {
     name.classList.add('image-name');
     name.textContent = data[i].full_name.split(' ')[0];
     lastname.classList.add('image-lastname');
-    lastname.textContent = data[i].full_name.split(' ')[1];
+    if (data[i].full_name.split(' ')[1]) lastname.textContent = data[i].full_name.split(' ')[1];
     country.classList.add('image-country');
     country.textContent = data[i].country;
     speciality.classList.add('image-speciality');
@@ -94,7 +94,7 @@ function showFav() {
     name.classList.add('image-name');
     name.textContent = fav[i].full_name.split(' ')[0];
     lastname.classList.add('image-lastname');
-    lastname.textContent = fav[i].full_name.split(' ')[1];
+    if (fav[i].full_name.split(' ')[1]) lastname.textContent = fav[i].full_name.split(' ')[1];
     country.classList.add('image-country');
     country.textContent = fav[i].country;
     speciality.classList.add('image-speciality');
@@ -109,8 +109,7 @@ function showFav() {
 }
 
 function openInfoPopup(searchData) {
-  const teachers = findObj(data, searchData);
-  if (teachers.length === 0) alert('This teacher does not exist');
+  const teachers = findObj(data, searchData.trim());
   const teacher = teachers[0];
   if (teacher.full_name) document.getElementsByClassName('info-text-name')[0].innerHTML = teacher.full_name;
   if (teacher.course) document.getElementsByClassName('info-text-speciality')[0].innerHTML = teacher.course;
@@ -134,7 +133,7 @@ function closeSearch() {
 
 function search() {
   closeSearch();
-  const searchData = document.getElementsByClassName('search-teacher')[0].value;
+  const searchData = document.getElementsByClassName('search-teacher')[0].value.trim();
   const teachers = findObj(data, searchData);
   const div = document.createElement('div');
   div.classList.add('search-list');
@@ -197,14 +196,18 @@ function paginationFav(index) {
   for (let i = 0; i < 5; i += 1) {
     document.getElementsByClassName('image-large')[i + 10].src = fav[(currentFav + i) % fav.length].picture_large;
     document.getElementsByClassName('image-name')[i + 10].innerHTML = fav[(currentFav + i) % fav.length].full_name.split(' ')[0];
-    document.getElementsByClassName('image-lastname')[i + 10].innerHTML = fav[(currentFav + i) % fav.length].full_name.split(' ')[1];
+    if (fav[(currentFav + i) % fav.length].full_name.split(' ')[1]) {
+      document.getElementsByClassName('image-lastname')[i + 10].innerHTML = fav[(currentFav + i) % fav.length].full_name.split(' ')[1];
+    } else {
+      document.getElementsByClassName('image-lastname')[i + 10].innerHTML = ' ';
+    }
     document.getElementsByClassName('image-speciality')[i + 10].innerHTML = fav[(currentFav + i) % fav.length].course;
     document.getElementsByClassName('image-country')[i + 10].innerHTML = fav[(currentFav + i) % fav.length].country;
   }
 }
 
 function changeFav(name) {
-  const obj = findObj(data, name)[0];
+  const obj = findObj(data, name.trim())[0];
   if (obj.favorite) {
     data[data.indexOf(obj)].favorite = false;
     document.getElementById('info-star').innerHTML = '☆';
@@ -238,8 +241,12 @@ function showFilterTop() {
       document.getElementsByClassName('starred')[i].style.visibility = 'visible';
       document.getElementsByClassName('image-large')[i].src = showArray[i].picture_large;
       document.getElementsByClassName('image-name')[i].innerHTML = showArray[i].full_name.split(' ')[0];
-      document.getElementsByClassName('image-lastname')[i].innerHTML = showArray[i].full_name.split(' ')[1];
-      document.getElementsByClassName('image-speciality')[i].innerHTML = showArray[i].country;
+      if (showArray[i].full_name.split(' ')[1]) {
+        document.getElementsByClassName('image-lastname')[i].innerHTML = showArray[i].full_name.split(' ')[1];
+      } else {
+        document.getElementsByClassName('image-lastname')[i].innerHTML = ' ';
+      }
+      document.getElementsByClassName('image-speciality')[i].innerHTML = showArray[i].course;
       document.getElementsByClassName('image-country')[i].innerHTML = showArray[i].country;
       if (showArray[i].favorite) {
         document.getElementsByClassName('star')[i].style.visibility = 'visible';
