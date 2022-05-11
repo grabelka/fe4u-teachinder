@@ -173,6 +173,12 @@ function closeSearch() {
   }
 }
 
+function closeSearch() {
+  for (let i = 0; i < document.getElementsByClassName('search-list').length; i += 1) {
+    document.getElementsByClassName('search-list')[i].style.visibility = 'hidden';
+  }
+}
+
 function search() {
   closeSearch();
   const searchData = document.getElementsByClassName('search-teacher')[0].value.trim();
