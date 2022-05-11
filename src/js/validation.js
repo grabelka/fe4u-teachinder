@@ -1,27 +1,14 @@
 function checkString(str) {
-  return typeof str !== 'string' && str[0].toUpperCase() !== str.full_name[0];
+  return typeof str === 'string' && str[0].toUpperCase() === str[0];
 }
 
 module.exports = (obj) => {
-  if (!obj.full_name || !obj.gender || !obj.note || !obj.state || !obj.city || !obj.country) {
+  const requiredFields = ['full_name', 'gender', 'note', 'city', 'country', 'phone', 'age', 'email'];
+  const strFields = ['full_name', 'note', 'city', 'country'];
+  if (requiredFields.filter((el) => obj[el]).length !== requiredFields.length) {
     return false;
   }
-  if (!obj.phone || !obj.age || !obj.email) {
-    return false;
-  }
-  if (checkString(obj.full_name)) {
-    return false;
-  }
-  if (checkString(obj.note)) {
-    return false;
-  }
-  if (checkString(obj.state)) {
-    return false;
-  }
-  if (checkString(obj.city)) {
-    return false;
-  }
-  if (checkString(obj.country)) {
+  if (strFields.filter((el) => checkString(obj[el])).length !== strFields.length) {
     return false;
   }
   if (!obj.gender === 'male' && !obj.gender === 'female') {

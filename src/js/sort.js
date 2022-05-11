@@ -2,36 +2,20 @@ module.exports = (arr, field, isAsc) => {
   if (!field) {
     return arr;
   }
-  if (field === 'fullName' && !isAsc) {
-    arr.sort((a, b) => (a.full_name < b.full_name ? 1 : -1));
-    return arr;
-  }
-  if (field === 'fullName' && isAsc) {
-    arr.sort((a, b) => (a.full_name > b.full_name ? 1 : -1));
+  if (field === 'full_name' || field === 'course' || field === 'country' || field === 'gender') {
+    arr.sort((a, b) => isAsc ? (a[field] && b[field] && (a[field].toLowerCase() > b[field].toLowerCase()) ? 1 : -1) : (a[field] && b[field] && (a[field].toLowerCase() < b[field].toLowerCase()) ? 1 : -1));
     return arr;
   }
   if (field === 'bDay' && !isAsc) {
-    arr.sort((a, b) => new Date(b.b_date) - new Date(a.b_date));
-    return arr;
-  }
-  if (field === 'bDay' && isAsc) {
-    arr.sort((a, b) => new Date(a.b_date) - new Date(b.b_date));
+    arr.sort((a, b) => isAsc ? new Date(a.b_date) - new Date(b.b_date) : new Date(b.b_date) - new Date(a.b_date));
     return arr;
   }
   if (field === 'age' && !isAsc) {
-    arr.sort((a, b) => b.age - a.age);
+    arr.sort((a, b) => isAsc ? a.age - b.age : b.age - a.age);
     return arr;
   }
   if (field === 'age' && isAsc) {
     arr.sort((a, b) => a.age - b.age);
-    return arr;
-  }
-  if (field === 'country' && isAsc) {
-    arr.sort((a, b) => (a.country < b.country ? 1 : -1));
-    return arr;
-  }
-  if (field === 'country' && isAsc) {
-    arr.sort((a, b) => (a.country > b.country ? 1 : -1));
     return arr;
   }
   return arr;
