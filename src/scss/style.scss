@@ -227,6 +227,7 @@ img:hover, .not-image:hover {
   right: 0.5em;
   color: rgb(228, 207, 15);
   visibility: hidden;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
@@ -435,6 +436,7 @@ img:hover, .not-image:hover {
   top: 1em;
   right: 0.3em;
   color: rgb(228, 207, 15);
+  cursor: pointer;
 }
 
 .search-list {

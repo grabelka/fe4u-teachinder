@@ -14,7 +14,7 @@ module.exports = (arr, country, age, gender, photo, favorite) => {
     if (favorite === undefined || favorite == null || obj.favorite === favorite) {
       addFavorite = true;
     }
-    if (photo === undefined || photo == null || obj.picture_large) {
+    if (!photo || obj.picture_large !== '../images/user.png') {
       addPhoto = true;
     }
     if (!age || (obj.age && obj.age.toString() > age.split('-')[0].toString() && obj.age.toString() < age.split('-')[1].toString())) {
