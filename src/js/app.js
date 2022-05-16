@@ -1,14 +1,12 @@
 const testModules = require('./test-module');
-// const data = require('./mockNormalize');
 const validation = require('./validation');
 const filter = require('./filter');
 const findObj = require('./findObj');
-const findPercent = require('./findPercent');
 const sort = require('./sort');
+const get = require('./get');
+const post = require('./post');
+const getPagination = require('./pagination');
 require('../css/app.css');
-
-const getUrl = 'https://randomuser.me/api/?results=50';
-const postUrl = 'http://localhost:3000/teachers';
 
 let data;
 let sortedData;
@@ -153,16 +151,16 @@ function showFav() {
 function openInfoPopup(searchData) {
   const teachers = findObj(data, searchData.trim());
   const teacher = teachers[0];
-  if (teacher.full_name) document.getElementsByClassName('info-text-name')[0].innerHTML = teacher.full_name;
-  if (teacher.course) document.getElementsByClassName('info-text-speciality')[0].innerHTML = teacher.course;
-  if (teacher.city) document.getElementsByClassName('info-text')[0].innerHTML = `${teacher.country}, ${teacher.city}`;
-  if (teacher.age) document.getElementsByClassName('info-text')[1].innerHTML = `${teacher.age}, ${teacher.gender}`;
-  if (teacher.email) document.getElementsByClassName('info-text-mail')[0].innerHTML = teacher.email;
-  if (teacher.phone) document.getElementsByClassName('info-text')[2].innerHTML = teacher.phone;
-  if (teacher.note) document.getElementsByClassName('info-textinfo')[0].innerHTML = teacher.note;
+  if (teacher.full_name) document.getElementsByClassName('info-text-name')[0].innerText = teacher.full_name;
+  if (teacher.course) document.getElementsByClassName('info-text-speciality')[0].innerText = teacher.course;
+  if (teacher.city) document.getElementsByClassName('info-text')[0].innerText = `${teacher.country}, ${teacher.city}`;
+  if (teacher.age) document.getElementsByClassName('info-text')[1].innerText = `${teacher.age}, ${teacher.gender}`;
+  if (teacher.email) document.getElementsByClassName('info-text-mail')[0].innerText = teacher.email;
+  if (teacher.phone) document.getElementsByClassName('info-text')[2].innerText = teacher.phone;
+  if (teacher.note) document.getElementsByClassName('info-textinfo')[0].innerText = teacher.note;
   if (teacher.picture_large) document.getElementById('popup-img').src = teacher.picture_large;
-  if (teacher.favorite) document.getElementById('info-star').innerHTML = '★';
-  if (!teacher.favorite) document.getElementById('info-star').innerHTML = '☆';
+  if (teacher.favorite) document.getElementById('info-star').innerText = '★';
+  if (!teacher.favorite) document.getElementById('info-star').innerText = '☆';
   document.getElementsByClassName('info-popup')[0].style.visibility = 'visible';
   document.getElementsByClassName('info-popup')[0].style.visibility = 'visible';
 }
@@ -206,52 +204,40 @@ function search() {
 }
 
 function pagination(index) {
-  fetch(`https://randomuser.me/api/?page=${index}&results=10&seed=abc`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((response) => {
-      return response.results;
-    })
-    .then((response) => {
-      const responseData = normalize(response);
-      for (let i = 0; i < 10; i += 1) {
-        document.getElementsByClassName('table-name')[i].innerHTML = responseData[i].full_name;
-        document.getElementsByClassName('table-course')[i].innerHTML = responseData[i].course;
-        if (responseData[i].age) {
-          document.getElementsByClassName('table-age')[i].innerHTML = responseData[i].age;
-        } else {
-          document.getElementsByClassName('table-age')[i].innerHTML = ' ';
-        }
-        document.getElementsByClassName('table-gender')[i].innerHTML = responseData[i].gender;
-        document.getElementsByClassName('table-country')[i].innerHTML = responseData[i].country;
+  getPagination(index).then((response) => {
+    const responseData = normalize(response);
+    for (let i = 0; i < 10; i += 1) {
+      document.getElementsByClassName('table-name')[i].innerText = responseData[i].full_name;
+      document.getElementsByClassName('table-course')[i].innerText = responseData[i].course;
+      if (responseData[i].age) {
+        document.getElementsByClassName('table-age')[i].innerText = responseData[i].age;
+      } else {
+        document.getElementsByClassName('table-age')[i].innerText = ' ';
       }
-    });
+      document.getElementsByClassName('table-gender')[i].innerText = responseData[i].gender;
+      document.getElementsByClassName('table-country')[i].innerText = responseData[i].country;
+    }
+  });
 }
 
 function changeTable(arr) {
   for (let i = 0; i < 10; i += 1) {
     if (arr[i]) {
-      document.getElementsByClassName('table-name')[i].innerHTML = arr[i].full_name;
-      document.getElementsByClassName('table-course')[i].innerHTML = arr[i].course;
+      document.getElementsByClassName('table-name')[i].innerText = arr[i].full_name;
+      document.getElementsByClassName('table-course')[i].innerText = arr[i].course;
       if (arr[i].age) {
-        document.getElementsByClassName('table-age')[i].innerHTML = arr[i].age;
+        document.getElementsByClassName('table-age')[i].innerText = arr[i].age;
       } else {
-        document.getElementsByClassName('table-age')[i].innerHTML = ' ';
+        document.getElementsByClassName('table-age')[i].innerText = ' ';
       }
-      document.getElementsByClassName('table-gender')[i].innerHTML = arr[i].gender;
-      document.getElementsByClassName('table-country')[i].innerHTML = arr[i].country;
+      document.getElementsByClassName('table-gender')[i].innerText = arr[i].gender;
+      document.getElementsByClassName('table-country')[i].innerText = arr[i].country;
     } else {
-      document.getElementsByClassName('table-name')[i].innerHTML = '';
-      document.getElementsByClassName('table-course')[i].innerHTML = '';
-      document.getElementsByClassName('table-age')[i].innerHTML = ' ';
-      document.getElementsByClassName('table-gender')[i].innerHTML = '';
-      document.getElementsByClassName('table-country')[i].innerHTML = '';
+      document.getElementsByClassName('table-name')[i].innerText = '';
+      document.getElementsByClassName('table-course')[i].innerText = '';
+      document.getElementsByClassName('table-age')[i].innerText = ' ';
+      document.getElementsByClassName('table-gender')[i].innerText = '';
+      document.getElementsByClassName('table-country')[i].innerText = '';
     }
   }
 }
@@ -270,14 +256,14 @@ function paginationFav(index) {
   }
   for (let i = 0; i < 5; i += 1) {
     document.getElementsByClassName('image-large')[i + 10].src = fav[(currentFav + i) % fav.length].picture_large;
-    document.getElementsByClassName('image-name')[i + 10].innerHTML = fav[(currentFav + i) % fav.length].full_name.split(' ')[0];
+    document.getElementsByClassName('image-name')[i + 10].innerText = fav[(currentFav + i) % fav.length].full_name.split(' ')[0];
     if (fav[(currentFav + i) % fav.length].full_name.split(' ')[1]) {
-      document.getElementsByClassName('image-lastname')[i + 10].innerHTML = fav[(currentFav + i) % fav.length].full_name.split(' ')[1];
+      document.getElementsByClassName('image-lastname')[i + 10].innerText = fav[(currentFav + i) % fav.length].full_name.split(' ')[1];
     } else {
-      document.getElementsByClassName('image-lastname')[i + 10].innerHTML = ' ';
+      document.getElementsByClassName('image-lastname')[i + 10].innerText = ' ';
     }
-    document.getElementsByClassName('image-speciality')[i + 10].innerHTML = fav[(currentFav + i) % fav.length].course;
-    document.getElementsByClassName('image-country')[i + 10].innerHTML = fav[(currentFav + i) % fav.length].country;
+    document.getElementsByClassName('image-speciality')[i + 10].innerText = fav[(currentFav + i) % fav.length].course;
+    document.getElementsByClassName('image-country')[i + 10].innerText = fav[(currentFav + i) % fav.length].country;
   }
 }
 
@@ -285,11 +271,11 @@ function changeFav(name) {
   const obj = findObj(data, name.trim())[0];
   if (obj.favorite) {
     data[data.indexOf(obj)].favorite = false;
-    document.getElementById('info-star').innerHTML = '☆';
+    document.getElementById('info-star').innerText = '☆';
     document.getElementsByClassName('star')[data.indexOf(obj)].style.visibility = 'hidden';
   } else {
     data[data.indexOf(obj)].favorite = true;
-    document.getElementById('info-star').innerHTML = '★';
+    document.getElementById('info-star').innerText = '★';
     document.getElementsByClassName('star')[data.indexOf(obj)].style.visibility = 'visible';
   }
 }
@@ -315,14 +301,14 @@ function showFilterTop() {
     if (filterArray.length > i) {
       document.getElementsByClassName('starred')[i].style.visibility = 'visible';
       document.getElementsByClassName('image-large')[i].src = filterArray[i].picture_large;
-      document.getElementsByClassName('image-name')[i].innerHTML = filterArray[i].full_name.split(' ')[0];
+      document.getElementsByClassName('image-name')[i].innerText = filterArray[i].full_name.split(' ')[0];
       if (filterArray[i].full_name.split(' ')[1]) {
-        document.getElementsByClassName('image-lastname')[i].innerHTML = filterArray[i].full_name.split(' ')[1];
+        document.getElementsByClassName('image-lastname')[i].innerText = filterArray[i].full_name.split(' ')[1];
       } else {
-        document.getElementsByClassName('image-lastname')[i].innerHTML = ' ';
+        document.getElementsByClassName('image-lastname')[i].innerText = ' ';
       }
-      document.getElementsByClassName('image-speciality')[i].innerHTML = filterArray[i].course;
-      document.getElementsByClassName('image-country')[i].innerHTML = filterArray[i].country;
+      document.getElementsByClassName('image-speciality')[i].innerText = filterArray[i].course;
+      document.getElementsByClassName('image-country')[i].innerText = filterArray[i].country;
       if (filterArray[i].favorite) {
         document.getElementsByClassName('star')[i].style.visibility = 'visible';
       } else {
@@ -401,17 +387,7 @@ function addTeacher() {
     data.unshift(obj);
     showFilterTop();
     changeTable(data);
-    fetch(postUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(obj),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
+    post(obj).then((response) => {
         console.log(response);
       });
   } else {
@@ -421,29 +397,17 @@ function addTeacher() {
 
 console.log(testModules.hello);
 
-fetch(getUrl, {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
-  .then((response) => {
-    return response.json();
-  })
-  .then((response) => {
-    return response.results;
-  })
-  .then((response) => {
-    data = normalize(response);
-    sortedData = data;
-    filterArray = data;
-    showTop();
-    showTable();
-    showFav();
-    for (let i = 0; i < 15; i += 1) {
-      document.getElementsByClassName('image-large')[i].addEventListener('click', () => openInfoPopup(`${document.getElementsByClassName('image-name')[i].textContent} ${document.getElementsByClassName('image-lastname')[i].textContent}`));
-    }
-  });
+get.then((response) => {
+  data = normalize(response);
+  sortedData = data;
+  filterArray = data;
+  showTop();
+  showTable();
+  showFav();
+  for (let i = 0; i < 15; i += 1) {
+    document.getElementsByClassName('image-large')[i].addEventListener('click', () => openInfoPopup(`${document.getElementsByClassName('image-name')[i].textContent} ${document.getElementsByClassName('image-lastname')[i].textContent}`));
+  }
+});
 
 document.getElementById('search').addEventListener('click', search);
 
