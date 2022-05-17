@@ -1,7 +1,11 @@
+const _ = require('lodash');
+const dayjs = require('dayjs');
+
 const testModules = require('./test-module');
 const validation = require('./validation');
 const filter = require('./filter');
 const findObj = require('./findObj');
+const findPercent = require('./findPercent');
 const sort = require('./sort');
 const get = require('./get');
 const post = require('./post');
@@ -27,13 +31,13 @@ function normalize(obj1) {
   for (let i = 0; i < obj1.length; i += 1) {
     let id = '';
     for (let j = 0; j < 11; j += 1) {
-      id += Math.floor(Math.random() * 10);
+      id += _.floor(_.random(9));
     }
     const obj = {
       id: `FN${id}`,
-      course: course[Math.floor(Math.random() * course.length)],
-      favorite: favorite[Math.floor(Math.random() * favorite.length)],
-      color: color[Math.floor(Math.random() * color.length)],
+      course: course[_.floor(_.random(course.length - 1))],
+      favorite: favorite[_.floor(_.random(favorite.length - 1))],
+      color: color[_.floor(_.random(color.length - 1))],
       gender: obj1[i].gender,
       title: obj1[i].name.title,
       full_name: `${obj1[i].name.first} ${obj1[i].name.last}`,
@@ -54,6 +58,24 @@ function normalize(obj1) {
     arr.push(obj);
   }
   return arr;
+}
+
+function chart(chartLabels, chartData, colors) {
+  const config = {
+    type: 'pie',
+    data: {
+      labels: chartLabels,
+      datasets: [{
+        data: chartData,
+        backgroundColor: colors,
+        hoverOffset: 7,
+      }],
+    },
+  };
+  new Chart(
+    document.getElementById('myChart'),
+    config,
+  );
 }
 
 function showTop() {
@@ -151,18 +173,26 @@ function showFav() {
 function openInfoPopup(searchData) {
   const teachers = findObj(data, searchData.trim());
   const teacher = teachers[0];
+  let days = dayjs(teacher.b_date).set('year', 2022).diff(dayjs(), 'day');
+  if (days < 0) days += 365;
   if (teacher.full_name) document.getElementsByClassName('info-text-name')[0].innerText = teacher.full_name;
   if (teacher.course) document.getElementsByClassName('info-text-speciality')[0].innerText = teacher.course;
   if (teacher.city) document.getElementsByClassName('info-text')[0].innerText = `${teacher.country}, ${teacher.city}`;
   if (teacher.age) document.getElementsByClassName('info-text')[1].innerText = `${teacher.age}, ${teacher.gender}`;
   if (teacher.email) document.getElementsByClassName('info-text-mail')[0].innerText = teacher.email;
   if (teacher.phone) document.getElementsByClassName('info-text')[2].innerText = teacher.phone;
+  if (teacher.note) document.getElementsByClassName('info-bday')[0].innerText = `Next birthday in ${days} days`;
   if (teacher.note) document.getElementsByClassName('info-textinfo')[0].innerText = teacher.note;
   if (teacher.picture_large) document.getElementById('popup-img').src = teacher.picture_large;
   if (teacher.favorite) document.getElementById('info-star').innerText = '★';
   if (!teacher.favorite) document.getElementById('info-star').innerText = '☆';
   document.getElementsByClassName('info-popup')[0].style.visibility = 'visible';
   document.getElementsByClassName('info-popup')[0].style.visibility = 'visible';
+  let map = L.map('map').setView([teacher.coordinates.latitude, teacher.coordinates.longitude], 13);
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+  L.marker([teacher.coordinates.latitude, teacher.coordinates.longitude]).addTo(map);
 }
 
 function closeSearch() {
@@ -396,6 +426,7 @@ get.then((response) => {
   sortedData = data;
   filterArray = data;
   showTop();
+  chart(['18-31', '32-45', '45+'], [findPercent(data, '17-32'), findPercent(data, '31-46'), findPercent(data, '45-99')], ['rgb(174, 34, 255)', 'rgb(34, 255, 163)', 'rgb(255, 31, 61)']);
   showTable();
   showFav();
   for (let i = 0; i < 15; i += 1) {
@@ -432,6 +463,12 @@ document.getElementById('closeAddPopup').addEventListener('click', () => {
 });
 document.getElementById('closeInfoPopup').addEventListener('click', () => {
   document.getElementsByClassName('info-popup')[0].style.visibility = 'hidden';
+});
+document.getElementById('closeMap').addEventListener('click', () => {
+  document.getElementById('map-container').style.visibility = 'hidden';
+});
+document.getElementById('open-map').addEventListener('click', () => {
+  document.getElementById('map-container').style.visibility = 'visible';
 });
 
 document.getElementById('page1').addEventListener('click', () => pagination(1));

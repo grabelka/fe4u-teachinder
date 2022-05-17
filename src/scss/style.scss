@@ -135,6 +135,12 @@ input {
   background-color: #f3741f;
 }
 
+#chart-container {
+  margin-left: 30%;
+  margin-right: 30%;
+  padding-bottom: 1em;
+}
+
 .column {
   float: left;
   width: 80%;
@@ -409,7 +415,7 @@ img:hover, .not-image:hover {
   margin: 1em;
 }
 
-.info-text, .info-text-name, .info-text-speciality, .info-text-mail, .info-textinfo .info-text-map {
+.info-text, .info-text-name, .info-text-speciality, .info-text-mail, .info-textinfo .info-text-map, .info-bday {
   margin-top: 1em;
 }
 
@@ -428,6 +434,23 @@ img:hover, .not-image:hover {
 .info-text-map {
   border-bottom: 1px dashed rgb(31, 178, 197);
   width: 5em;
+}
+
+#map-container {
+  box-shadow: 0 0 5px black;
+  z-index: 2;
+  visibility: hidden;
+  position: fixed;
+  top: 2em;
+  left: 20%;
+  right: 20%;
+  background-color: #fff;
+}
+
+#map {
+  margin: 5%;
+  height: 400px;
+  width: 90%;
 }
 
 #info-star {

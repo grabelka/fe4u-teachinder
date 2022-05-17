@@ -1,6 +1,5 @@
-const findObj = require('./findObj');
-
 module.exports = (arr, value) => {
-  const matchObj = findObj(arr, value);
+  const condition = (obj) => obj.age > Number(value.split('-')[0]) && obj.age < Number(value.split('-')[1]);
+  const matchObj = arr.filter((obj) => condition(obj));
   return Math.round((matchObj.length / arr.length) * 100);
 };

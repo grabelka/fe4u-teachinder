@@ -1,5 +1,7 @@
+const _ = require('lodash');
+
 function checkString(str) {
-  return typeof str === 'string' && str[0].toUpperCase() === str[0];
+  return typeof str === 'string' && _.upperFirst(str) === str;
 }
 
 module.exports = (obj) => {
@@ -14,7 +16,7 @@ module.exports = (obj) => {
   if (!obj.gender === 'male' && !obj.gender === 'female') {
     return false;
   }
-  if (obj.phone.match(/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s./0-9]*$/g) && Number.isInteger(obj.age) && obj.email.includes('@')) {
+  if (obj.phone.match(/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s./0-9]*$/g) && _.inRange(obj.age, 17, 100) && obj.email.includes('@')) {
     return true;
   }
   return false;

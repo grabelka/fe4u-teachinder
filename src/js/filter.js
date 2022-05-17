@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 module.exports = (arr, country, age, gender, photo, favorite) => {
   const newArr = arr.filter((obj) => {
     let addCountry = false;
@@ -11,13 +13,13 @@ module.exports = (arr, country, age, gender, photo, favorite) => {
     if (!gender || obj.gender === gender) {
       addGender = true;
     }
-    if (favorite === undefined || favorite == null || obj.favorite === favorite) {
+    if (_.isUndefined(favorite) || _.isNull(favorite) || obj.favorite === favorite) {
       addFavorite = true;
     }
     if (!photo || obj.picture_large !== '../images/user.png') {
       addPhoto = true;
     }
-    if (!age || (obj.age && obj.age.toString() > age.split('-')[0].toString() && obj.age.toString() < age.split('-')[1].toString())) {
+    if (!age || (!_.isUndefined(obj.age) && obj.age.toString() > age.split('-')[0].toString() && obj.age.toString() < age.split('-')[1].toString())) {
       addAge = true;
     }
     if (addCountry && addAge && addFavorite && addPhoto && addGender) {

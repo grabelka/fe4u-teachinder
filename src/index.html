@@ -11,7 +11,13 @@
       <title>Teachinder</title>
 
       <link rel="stylesheet" href="./css/app.css">
-
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""/>
+      <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
    </head>
 
    <body itemscope itemtype="http://schema.org/WebPage">
@@ -58,6 +64,10 @@
          <input id="only-fav" type="checkbox"> Only favorites
          <div class="top-container"></div>
          <h1 id="statistics">Statistics</h1>
+         <div id="chart-container">
+            <canvas id="myChart"></canvas>
+         </div>
+         <h1></h1>
          <div class="column">
             <table>
                <tr>
@@ -177,10 +187,19 @@
             <p class="info-text"></p>
             <p class="info-text"></p>
             <p class="info-text-mail"></p>
-            <p class="info-text"></p><br><br><br>
-            <p class="info-textinfo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit dolorum dolorem sapiente. Pariatur aspernatur asperiores dignissimos! Rem ea explicabo ipsum numquam labore maiores voluptas. Fuga hic architecto accusamus eligendi voluptas!</p>
-            <p class="info-text-map cursor">toggle map</p>
+            <p class="info-text"></p>
+            <p class="info-bday"></p>
+            <br>
+            <p class="info-textinfo"></p>
+            <p id="open-map" class="info-text-map cursor">toggle map</p>
          </div>
       </section> 
+      <section id="map-container">
+         <header class="popup-header">
+            <p class="teacher-map">Map</p>
+            <p class="cursor" id="closeMap">&#x2715</p>
+         </header>
+         <div id="map"></div>
+      </section>
   </body>
 </html>

@@ -1,9 +1,11 @@
+const _ = require('lodash');
+
 module.exports = (arr, field, isAsc) => {
   if (!field) {
     return arr;
   }
   if (field === 'full_name' || field === 'course' || field === 'country' || field === 'gender') {
-    arr.sort((a, b) => isAsc ? (a[field] && b[field] && (a[field].toLowerCase() > b[field].toLowerCase()) ? 1 : -1) : (a[field] && b[field] && (a[field].toLowerCase() < b[field].toLowerCase()) ? 1 : -1));
+    arr.sort((a, b) => isAsc ? (a[field] && b[field] && (_.toLower(a[field]) > _.toLower(b[field])) ? 1 : -1) : (a[field] && b[field] && (_.toLower(a[field]) < _.toLower(b[field])) ? 1 : -1));
     return arr;
   }
   if (field === 'bDay' && !isAsc) {

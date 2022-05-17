@@ -40,6 +40,10 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "chart.js": "^3.7.1",
+    "dayjs": "^1.11.2",
+    "leaflet": "^1.8.0",
+    "lodash": "^4.17.21",
     "node-fetch": "^3.2.4"
   }
 }
