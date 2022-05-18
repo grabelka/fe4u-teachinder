@@ -8,15 +8,198 @@
       <meta name="msapplication-tap-highlight" content="no">
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <title>Project</title>
+      <title>Teachinder</title>
 
       <link rel="stylesheet" href="./css/app.css">
-
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""/>
+      <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
    </head>
 
    <body itemscope itemtype="http://schema.org/WebPage">
-
-      <script type="text/javascript" src="../build/app.js"></script>
+      <header>
+         <h1 class="header-name">Teachinder</h1>
+         <h1 class="header-name-orange">Teachinder</h1>
+         <div class="search">
+            <input type="text" class="search-teacher" size="25" placeholder="Name, note or age to search">
+            <input id="search" type="button" class="button" value="Search">
+         </div>
+      </header>
+      <nav class="navigation">
+         <div class="header-nav">
+            <a href="#top">Teachers</a>
+            <a href="#statistics">Statistics</a>
+            <a href="#favorites">Favorites</a>
+            <a href="#about">About</a>
+         </div>
+         <input id="openAddPopup1" type="button" class="add button" value="Add teacher">
+      </nav>
+      <section>
+         <h1 id="top">Top teachers</h1>
+         Age: <select id="filter-age" name="age" required > 
+            <option value="all">All</option> 
+            <option value="17-32">18-31</option> 
+            <option value="31-46">32-45</option>
+            <option value="46-80">45+</option> 
+         </select>
+         Region: <select id="filter-country" name="region" required > 
+            <option value="all">All</option> 
+            <option value="Australia">Australia</option> 
+            <option value="Canada">Canada</option>
+            <option value="Germany">Germany</option>
+            <option value="Ireland">Ireland</option>
+            <option value="United States">United States</option> 
+            <option value="Turkey">Turkey</option>
+         </select>
+         Sex: <select id="filter-gender" name="sex" required > 
+            <option value="all">All</option> 
+            <option value="male">Male</option> 
+            <option value="female">Female</option>
+         </select>
+         <input id="only-photo" type="checkbox"> Only with photo
+         <input id="only-fav" type="checkbox"> Only favorites
+         <div class="top-container"></div>
+         <h1 id="statistics">Statistics</h1>
+         <div id="chart-container">
+            <canvas id="myChart"></canvas>
+         </div>
+         <h1></h1>
+         <div class="column">
+            <table>
+               <tr>
+                  <th id="sort-name" class="table-hover cursor">Name</th>
+                  <th id="sort-course" class="table-hover cursor">Speciality</th>
+                  <th id="sort-age" class="table-hover cursor">Age</th>
+                  <th id="sort-gender" class="table-hover cursor">Gender</th>
+                  <th id="sort-country" class="table-hover cursor">Nationality</th>
+               </tr>
+            </table>
+         </div>
+         <div class="column">
+            <table class="table-content">
+            </table>
+         </div>
+         <section class="list">
+            <a id="page1" class="list-nav">1</a>
+            <a id="page2" class="list-nav">2</a>
+            <a id="page3" class="list-nav">3</a>
+            <a class="list-nav">...</a>
+            <a id="page-last" class="list-nav">Last</a>
+         </section>
+         <h1 id="favorites">Favorites</h1>
+         <div class="fav-container">
+            <p id="prev">&#10094;</p>
+            <p id="next">&#10095;</p>
+         </div>
+         <h1 id="about"></h1>
+         <p class="about">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, architecto ab? Fugit, incidunt. Repellat vero omnis, hic iusto, dolorum voluptatum pariatur sequi neque quas delectus mollitia? Recusandae ipsum perspiciatis explicabo.</p>
+         <p class="about">Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto, amet cum. Itaque laboriosam quae molestiae iure, sequi similique magni eius dignissimos nesciunt assumenda fugit, autem consectetur praesentium fuga asperiores non!</p>
+         <p class="about">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo at explicabo aliquam natus repellat dolor maiores recusandae veniam, nobis quibusdam nulla facilis saepe ut aperiam, vitae tenetur voluptates. Officiis, quae.</p>
+         <script type="text/javascript" src="../build/app.js"></script>
+         <section class="navigation">
+            <div class="header-nav">
+               <a href="#top">Teachers</a>
+               <a href="#statistics">Statistics</a>
+               <a href="#favorites">Favorites</a>
+               <a href="#about">About</a>
+            </div>
+            <input id="openAddPopup2" type="button" class="add button" value="Add teacher">
+         </section>
+      </section>
       
+      <section class="add-popup">
+         <header class="popup-header">
+            <p class="add-teacher-header">Add teacher</p>
+            <p class="cursor" id="closeAddPopup">&#x2715</p>
+         </header>
+         <section class="grid-container">
+            <div class="grid-name">
+               <p>Name</p>
+               <input id="addName" class="max-width" type="text" name="fullname" size="20" placeholder="Enter name"> 
+            </div>
+            <div class="grid-speciality">
+               <p>Speciality</p>
+               <select id="addCourse" class="max-width" name="speciality" required > 
+                  <option value="Mathematics">Mathematics</option> 
+                  <option value="Sciense">Sciense</option>
+                  <option value="Languages">Languages</option>
+               </select>
+            </div>
+            <div class="grid-country">
+               <p>Country</p>
+               <select id="addCountry" class="max-width" name="country" required > 
+                  <option value="Ukraine">Ukraine</option> 
+                  <option value="Poland">Poland</option>
+                  <option value="USA">USA</option>
+                  <option value="Canada">Canada</option>
+               </select>
+            </div>
+            <div class="grid-city">
+               <p>City</p>
+               <input id="addCity" class="max-width" type="text" name="city" size="20"> 
+            </div>
+            <div class="grid-email">
+               <p>Email</p>
+               <input id="addMail" class="max-width" type="email" name="email" size="20"> 
+            </div>
+            <div class="grid-phone">
+               <p>Phone</p>
+               <input id="addPhone" class="max-width" type="tel" name="phone" size="20"> 
+            </div>
+            <div class="grid-date">
+               <p>Date of birth</p>
+               <input id="addDate" class="max-width" type="date" name="date_of_birth"> 
+            </div>
+            <div class="grid-sex">
+               <p>Sex</p>
+               <div class="checkbox">
+                  Male <input id="addMale" type="checkbox"> 
+                  Female <input id="addFemale" type="checkbox"> 
+               </div>
+            </div>
+            <div class="grid-color">
+               <p>Bacground color </p>
+               <input id="addColor" type="color" name="background_color"> 
+            </div>
+            <div class="grid-comment">
+               <p>Notes (optional)</p>
+               <textarea id="addNote" rows="5" cols="45" class="max-width-comment"></textarea>
+               <br>
+            </div>
+            <div class="grid-button"><input id="addTeacher" type="submit" class="button max-width add-button" value="Add"></div>
+         </section>
+      </section>
+
+      <section class="info-popup" data-bacground-color="white">
+         <header class="popup-header">
+            <p class="teacher-info-header">Teacher Info</p>
+            <p class="cursor" id="closeInfoPopup">&#x2715</p>
+         </header>
+         <div class="info-box">
+            <p id="info-star">&#9734</p>
+            <img id="popup-img" src="" alt="teacher photo">
+            <p class="info-text-name"></p>
+            <p class="info-text-speciality"></p>
+            <p class="info-text"></p>
+            <p class="info-text"></p>
+            <p class="info-text-mail"></p>
+            <p class="info-text"></p>
+            <p class="info-bday"></p>
+            <br>
+            <p class="info-textinfo"></p>
+            <p id="open-map" class="info-text-map cursor">toggle map</p>
+         </div>
+      </section> 
+      <section id="map-container">
+         <header class="popup-header">
+            <p class="teacher-map">Map</p>
+            <p class="cursor" id="closeMap">&#x2715</p>
+         </header>
+         <div id="map"></div>
+      </section>
   </body>
 </html>

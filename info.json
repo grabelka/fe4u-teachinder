@@ -1,0 +1,19 @@
+{
+  "teachers": [
+    {
+      "full_name": "Grabovska Anastasia",
+      "email": "nastyusha.gr@gmail.com",
+      "phone": "0938955999",
+      "course": "Mathematics",
+      "country": "Ukraine",
+      "city": "Ровно",
+      "b_date": "2021-06-03",
+      "age": 1,
+      "color": "#000000",
+      "note": "Kutvgv",
+      "gender": "female",
+      "picture_large": "../images/user.png",
+      "id": 1
+    }
+  ]
+}
